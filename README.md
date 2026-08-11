@@ -1,36 +1,30 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next.js Playground
 
-## Getting Started
+A personal learning lab for small, finished Next.js experiments. The home page is a searchable index generated from a typed registry.
 
-First, run the development server:
+## Run it
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000). The standard scaffold commands remain available:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm lint
+pnpm build
+pnpm start
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Add a finished experiment
 
-## Learn More
+1. Create an App Router page at `app/experiments/{group}/{slug}/page.tsx`.
+2. Add one matching entry to `experiments` in `lib/experiments.ts`.
+3. If it needs browser state, events, or browser APIs, keep that code in a small colocated component starting with `"use client"`.
+4. Run `pnpm lint` and `pnpm build`.
 
-To learn more about Next.js, take a look at the following resources:
+The registry validates duplicate group slugs and generated experiment paths during imports and builds. Routes that are still unfinished can exist without being registered; they remain hidden from the index until they are ready.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Included example
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+`/experiments/ui/dialog-basics` is a template-style shadcn dialog experiment. Use it as the reference for a small, finished catalog entry.
