@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { CheckCircle2, ExternalLink, FilePlus2, FolderPlus } from "lucide-react";
+import {
+  CheckCircle2,
+  ExternalLink,
+  FilePlus2,
+  FolderPlus,
+  Sparkles,
+} from "lucide-react";
 
 import { CodeBlock } from "@/components/code-block";
 import { ExperimentBackLink } from "@/components/experiment-back-link";
@@ -137,6 +143,31 @@ export default function AdminTemplatePage() {
             A private reference for keeping the catalog and route structure in sync.
             Linked from the dialog template example so you can jump between the finished
             experiment and these steps.
+          </p>
+        </div>
+
+        <div className="bg-muted/40 mt-8 px-4 sm:px-5 py-4 border rounded-xl max-w-2xl">
+          <div className="flex flex-wrap items-center gap-2">
+            <Sparkles className="size-4 text-foreground" aria-hidden="true" />
+            <p className="font-medium text-foreground text-sm">Fast path — ask Cursor</p>
+            <Badge variant="outline" className="font-mono text-xs tracking-tight">
+              newexp
+            </Badge>
+          </div>
+          <p className="mt-2 text-muted-foreground text-sm leading-6">
+            Or just use the{" "}
+            <code className="bg-background/80 px-1.5 py-0.5 rounded font-mono text-foreground text-xs">
+              newexp
+            </code>{" "}
+            skill to add a new experiment. It covers groups, the route, the How-to-build
+            section, registry entry, and the finish checklist. The steps below are the
+            same flow if you want to do it by hand.
+          </p>
+          <p className="mt-2 text-muted-foreground text-xs leading-5">
+            Skill file:{" "}
+            <code className="bg-background/80 px-1.5 py-0.5 rounded font-mono text-foreground">
+              .cursor/skills/newexp
+            </code>
           </p>
         </div>
 

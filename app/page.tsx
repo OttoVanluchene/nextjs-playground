@@ -26,12 +26,12 @@ export default function Home() {
           <div className="flex flex-wrap gap-3 mt-6">
             <div className="flex items-center gap-3 bg-background/80 shadow-xs backdrop-blur-sm px-4 py-2.5 border border-border rounded-xl">
               <Layers className="size-4 text-muted-foreground" />
-              <span className="text-muted-foreground text-sm">Learning groups</span>
+              <span className="text-muted-foreground text-sm">Groups</span>
               <strong className="font-mono text-sm">{experimentGroups.length}</strong>
             </div>
             <div className="flex items-center gap-3 bg-background/80 shadow-xs backdrop-blur-sm px-4 py-2.5 border border-border rounded-xl">
               <BookOpenCheck className="size-4 text-muted-foreground" />
-              <span className="text-muted-foreground text-sm">Ready experiments</span>
+              <span className="text-muted-foreground text-sm">Experiments</span>
               <strong className="font-mono text-sm">{catalogExperiments.length}</strong>
             </div>
           </div>

@@ -126,11 +126,21 @@ export function ExperimentCatalog({ experiments, groups }: ExperimentCatalogProp
 
   return (
     <div>
-      <div>
-        <p className="font-mono font-medium text-muted-foreground text-xs uppercase tracking-[0.18em]">
-          Experiment index
-        </p>
-        <h2 className="mt-2 font-semibold text-2xl tracking-tight">All experiments</h2>
+      <div className="flex flex-wrap justify-between items-end gap-3">
+        <div>
+          <p className="font-mono font-medium text-muted-foreground text-xs uppercase tracking-[0.18em]">
+            Experiment index
+          </p>
+          <h2 className="mt-2 font-semibold text-2xl tracking-tight">All experiments</h2>
+        </div>
+        <Button
+          render={<Link href="/how-to-add" />}
+          nativeButton={false}
+          variant="outline"
+          size="sm"
+        >
+          How to add an experiment?
+        </Button>
       </div>
 
       <div className="mt-6">
