@@ -21,6 +21,7 @@ const groupSnippet = `{
   name: "UI & Design",
   description: "Components, layouts, motion, and styling experiments.",
   order: 2,
+  color: "emerald",
 },`;
 
 const experimentSnippet = `{
@@ -34,27 +35,38 @@ const experimentSnippet = `{
 
 const pageSnippet = `import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 import { DialogDemo } from "./dialog-demo";
 import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
+import {
+  getCatalogExperiment,
+  getGroupColorClasses,
+} from "@/lib/experiments";
+
+const experiment = getCatalogExperiment("ui", "dialog-basics");
 
 export const metadata: Metadata = {
-  title: "Dialog basics (template example)",
-  description: "A shadcn dialog example with a small client-side component.",
+  title: experiment?.title ?? "Dialog basics",
+  description: experiment?.description ?? "",
 };
 
 export default function DialogBasicsPage() {
+  if (!experiment) notFound();
+
+  const groupColors = getGroupColorClasses(experiment.groupInfo);
+
   return (
     <main className="flex-1">
       <div className="mx-auto px-5 sm:px-8 py-12 sm:py-16 max-w-6xl">
         <Link href="/">Back to experiment index</Link>
 
-        <Badge variant="secondary">UI & Design</Badge>
-        <h1>Dialog basics (template example)</h1>
-        <p>
-          A compact shadcn dialog example that demonstrates an accessible,
-          focused client-side interaction inside a server-rendered route.
-        </p>
+        <Badge variant="outline" className={cn(groupColors.badge)}>
+          {experiment.groupInfo.name}
+        </Badge>
+        <h1>{experiment.title}</h1>
+        <p>{experiment.description}</p>
 
         <Link href="/admin/template">How this experiment was added</Link>
 
