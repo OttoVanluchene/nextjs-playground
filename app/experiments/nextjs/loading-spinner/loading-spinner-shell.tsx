@@ -134,10 +134,13 @@ export function LoadingSpinnerShell({ children }: LoadingSpinnerShellProps) {
             <span className="text-muted-foreground text-sm">{experiment.author}</span>
           </div>
           <p className="mt-4 text-muted-foreground text-lg leading-8">
-            The billing shell below (stats, recent list, chrome) renders on the server
-            right away. Only the nested invoice segment waits — its{" "}
-            <code className={inlineCodeClassName}>loading.tsx</code> fills that slot with
-            a spinner. Prefer a card-shaped placeholder? See{" "}
+            <code className={inlineCodeClassName}>loading.tsx</code> Suspense is{" "}
+            <span className="font-medium text-foreground">route-level</span>, not
+            component-level — it wraps a folder&apos;s{" "}
+            <code className={inlineCodeClassName}>page.tsx</code>, not an import. Nest a
+            route around the slow UI (here, the invoice) so that segment gets its own
+            spinner while the billing shell stays up. Prefer a card-shaped placeholder?
+            See{" "}
             <Link
               href="/experiments/nextjs/loading-skeleton"
               className="font-medium text-foreground hover:underline underline-offset-4"
@@ -152,14 +155,13 @@ export function LoadingSpinnerShell({ children }: LoadingSpinnerShellProps) {
           <Card>
             <CardHeader>
               <Loader2 className="mb-2 size-5 text-muted-foreground" aria-hidden="true" />
-              <CardTitle>
-                <code className={inlineCodeClassName}>loading.tsx</code> is Suspense
-              </CardTitle>
+              <CardTitle>Route-level, not component-level</CardTitle>
             </CardHeader>
             <CardContent className="text-muted-foreground text-sm leading-6">
-              Colocate it with a segment&apos;s{" "}
-              <code className={inlineCodeClassName}>page.tsx</code>. Next wraps that page
-              in a Suspense boundary and uses this UI as the fallback.
+              <code className={inlineCodeClassName}>loading.tsx</code> cannot target an
+              arbitrary component. Next attaches it to the route segment — that
+              folder&apos;s <code className={inlineCodeClassName}>page.tsx</code> — as the
+              Suspense fallback.
             </CardContent>
           </Card>
           <Card>
@@ -178,13 +180,13 @@ export function LoadingSpinnerShell({ children }: LoadingSpinnerShellProps) {
           <Card>
             <CardHeader>
               <Folders className="mb-2 size-5 text-muted-foreground" aria-hidden="true" />
-              <CardTitle>One folder per slow UI</CardTitle>
+              <CardTitle>Nest a route around the UI</CardTitle>
             </CardHeader>
             <CardContent className="text-muted-foreground text-sm leading-6">
-              <code className={inlineCodeClassName}>loading.tsx</code> is route-segment
-              scoped — not import-scoped. Give each independently loading piece its own
-              folder (or an explicit <code className={inlineCodeClassName}>Suspense</code>
-              ).
+              Want a clearer structure for one slow component? Give it a nested folder
+              with its own <code className={inlineCodeClassName}>page.tsx</code> +{" "}
+              <code className={inlineCodeClassName}>loading.tsx</code>. That is how you
+              &quot;wrap&quot; a component with the file convention.
             </CardContent>
           </Card>
         </div>
@@ -201,9 +203,10 @@ export function LoadingSpinnerShell({ children }: LoadingSpinnerShellProps) {
         </p>
         <h2 className="mt-2 font-semibold text-2xl tracking-tight">How to build it</h2>
         <p className="mt-3 max-w-2xl text-zinc-800 dark:text-zinc-300 text-sm leading-6">
-          Put slow work in a nested segment, a spinner in that segment&apos;s{" "}
-          <code className={buildInlineCodeClassName}>loading.tsx</code>, and shared UI in
-          the parent layout.
+          <BuildHighlight>Suspense via loading.tsx is route-level</BuildHighlight>, not
+          component-level. Nest a route around the slow UI, put a spinner in that
+          segment&apos;s <code className={buildInlineCodeClassName}>loading.tsx</code>,
+          and keep shared chrome in the parent layout.
         </p>
 
         <div className="space-y-10 mt-8 max-w-3xl">
@@ -218,14 +221,14 @@ export function LoadingSpinnerShell({ children }: LoadingSpinnerShellProps) {
             />
             <p className="mt-3 text-zinc-800 dark:text-zinc-300 text-sm leading-6">
               <BuildHighlight>
-                <code className={buildInlineCodeClassName}>loading.tsx</code> is
-                route-segment scoped
+                You cannot attach loading.tsx to a component import
               </BuildHighlight>
-              — it wraps that folder&apos;s{" "}
-              <code className={buildInlineCodeClassName}>page.tsx</code>, not an arbitrary
-              component you import. To give “a component” its own loading UI via the file
-              convention, put that UI&apos;s route in its own folder with a colocated{" "}
-              <code className={buildInlineCodeClassName}>loading.tsx</code>.
+              — only to a route segment. To give one UI (invoice, sidebar panel, etc.) its
+              own spinner with a clear project layout,{" "}
+              <BuildHighlight>wrap it in a nested folder</BuildHighlight> with{" "}
+              <code className={buildInlineCodeClassName}>page.tsx</code> +{" "}
+              <code className={buildInlineCodeClassName}>loading.tsx</code>. That nested
+              route is the Suspense boundary; the parent layout stays mounted around it.
             </p>
           </div>
 
