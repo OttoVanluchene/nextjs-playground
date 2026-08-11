@@ -106,4 +106,4 @@ Rules:
 - [ ] Page includes a **How to build it** section in `ExperimentBuildSection` (full-bleed grey band) with code blocks
 - [ ] Each build step explains what/why for a learner (not just bare snippets)
 - [ ] Key lines use `CodeBlock` `highlightLines`; key phrases use `BuildHighlight`
-- [ ] `pnpm lint` and `pnpm build` pass
+- [ ] Verification from `AGENTS.md`: `pnpm lint`, `pnpm exec tsc --noEmit`, and `pnpm build` all pass

@@ -19,9 +19,18 @@ To create or finish an experiment, use the **newexp** skill (`.cursor/skills/new
 - Next.js App Router + TypeScript + Tailwind + shadcn/ui
 - Package manager: `pnpm`
 - `pnpm dev` — local server
-- `pnpm lint` / `pnpm build` — required before calling an experiment done
 
 Human reference UI: `/admin/template`. Working example: `/experiments/ui/dialog-basics`.
+
+## Verification
+
+Run these **before calling an experiment done** and **before deploy**. They catch the failures Vercel surfaces in production builds (eslint + TypeScript).
+
+1. **Lint** — `pnpm lint`
+2. **Type check** — `pnpm exec tsc --noEmit`
+3. **Production build** — `pnpm build` (Next.js compile + type check; required gate)
+
+All three must pass. Do not skip type check just because lint is green — optional/`as const` registry issues often only show up in `tsc` or `build`.
 
 ## Project layout
 

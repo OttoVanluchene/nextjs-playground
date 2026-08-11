@@ -197,6 +197,12 @@ function validateCatalog() {
 
 validateCatalog();
 
+function resolveExperimentAuthor(experiment: Experiment): string {
+  // `as const satisfies` omits unused optional keys from the literal type;
+  // widen to Experiment so optional `author` is readable.
+  return experiment.author ?? DEFAULT_EXPERIMENT_AUTHOR;
+}
+
 export function getCatalogExperiments(): CatalogExperiment[] {
   const groupsBySlug = new Map(experimentGroups.map((group) => [group.slug, group]));
 
@@ -204,7 +210,7 @@ export function getCatalogExperiments(): CatalogExperiment[] {
     .sort((first, second) => second.publishedAt.localeCompare(first.publishedAt))
     .map((experiment) => ({
       ...experiment,
-      author: experiment.author ?? DEFAULT_EXPERIMENT_AUTHOR,
+      author: resolveExperimentAuthor(experiment),
       groupInfo: groupsBySlug.get(experiment.group)!,
     }));
 }
