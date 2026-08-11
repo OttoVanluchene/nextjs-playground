@@ -66,6 +66,23 @@ export const experiments = [
     tags: ["react", "performance", "client"],
     publishedAt: "2026-08-11T14:30Z",
   },
+  {
+    slug: "loading-spinner",
+    title: "Suspense - loading.js with a spinner",
+    description:
+      "A slow invoice fetch shows a spinner while the page shell stays visible.",
+    group: "nextjs",
+    tags: ["suspense", "loading", "streaming"],
+    publishedAt: "2026-08-11T16:00Z",
+  },
+  {
+    slug: "loading-skeleton",
+    title: "Suspense - loading.js with a skeleton",
+    description: "Same delayed invoice, but loading.tsx mirrors the card shape.",
+    group: "nextjs",
+    tags: ["suspense", "loading", "skeleton"],
+    publishedAt: "2026-08-11T16:05Z",
+  },
 ] as const satisfies readonly Experiment[];
 
 export type CatalogExperiment = Omit<Experiment, "author"> & {

@@ -132,6 +132,8 @@ function RawFilterDemo() {
   const [unrelatedClicks, setUnrelatedClicks] = useState(0);
   const filterRunsRef = useRef(0);
 
+  // Intentional: count filter work that happens during render (the lesson).
+  // eslint-disable-next-line react-hooks/refs -- demo counter for render-time .filter()
   filterRunsRef.current += 1;
   const filtered = filterItems(query);
 
@@ -139,6 +141,7 @@ function RawFilterDemo() {
     <FilterPanel
       mode="raw"
       filtered={filtered}
+      // eslint-disable-next-line react-hooks/refs -- read demo counter after increment above
       filterRuns={filterRunsRef.current}
       query={query}
       onQueryChange={setQuery}
@@ -154,6 +157,7 @@ function MemoFilterDemo() {
   const filterRunsRef = useRef(0);
 
   const filtered = useMemo(() => {
+    // eslint-disable-next-line react-hooks/refs -- demo counter inside memoized filter
     filterRunsRef.current += 1;
     return filterItems(query);
   }, [query]);
@@ -162,6 +166,7 @@ function MemoFilterDemo() {
     <FilterPanel
       mode="memo"
       filtered={filtered}
+      // eslint-disable-next-line react-hooks/refs -- read demo counter after memoized filter
       filterRuns={filterRunsRef.current}
       query={query}
       onQueryChange={setQuery}

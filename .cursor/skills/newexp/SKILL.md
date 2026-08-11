@@ -54,9 +54,10 @@ app/experiments/{group}/{slug}/page.tsx
 - Put interactivity in a colocated `"use client"` file (see `dialog-demo.tsx`).
 - Prefer pulling title/description/group badge from the registry via `getCatalogExperiment(group, slug)` and `getGroupColorClasses`, so catalog and page stay in sync.
 - **Intro / subtitle:** keep the opening paragraph under the title plain and concrete. Say what the experiment does in everyday language (1–3 short sentences). No jargon stacks, no “demonstrates an accessible focused client-side interaction” style. Detail belongs in theory cards and the How-to-build section.
-- Include a **How to build it** section with real `CodeBlock` snippets (commands + key files). Demo + theory alone is not enough — use `components/code-block.tsx`.
+- **Theory + How-to-build teach the core topic, not the demo.** Explain the concept you want to learn — how to set it up in any application. Theory cards and the How-to-build section cover APIs, file conventions, boundaries, and transferable patterns. Do **not** document playground-only wiring (fake delays, nonce routes, reload tricks, `connection()` hacks, demo remount helpers, etc.). The live demo may use those tricks; the explanation must ignore them.
+- Include a **How to build it** section with real `CodeBlock` snippets (commands + key files). Demo + theory alone is not enough — use `components/code-block.tsx`. Prefer generic paths/snippets a learner can paste into their own app (`app/.../loading.tsx`, `getSlowData()`, etc.) over this playground’s internal file paths when the lesson is portable.
 - Put that section in `ExperimentBuildSection` — a full-bleed grey band (light grey in light mode, dark grey in dark mode) that separates implementation from the theory/demo content above.
-- Write for a learner: after each code block, explain what the code does and **why** those choices were made (boundaries, APIs, a11y, file layout). Assume the reader wants to understand the code fully, not just copy it.
+- Write for a learner: after each code block, explain what the code does and **why** those choices were made (boundaries, APIs, a11y, file layout). Assume the reader wants to understand the pattern fully, not how this repo’s demo was wired.
 - **Highlight the takeaways:** In How-to-build, make the important bits easy to spot.
   - Code: pass `highlightLines={[…]}` (1-based) on `CodeBlock` for the lines that teach the lesson.
   - Prose: wrap the key phrase in `BuildHighlight` from `components/build-highlight.tsx` (amber mark). Do not highlight whole paragraphs — only the idea the reader should remember from that step.
@@ -104,6 +105,7 @@ Rules:
 - [ ] Registry entry exists (entry page only for multi-page flows)
 - [ ] Group badge uses `getGroupColorClasses` when showing group on the page
 - [ ] Page includes a **How to build it** section in `ExperimentBuildSection` (full-bleed grey band) with code blocks
+- [ ] Theory cards + How-to-build teach the core topic for any app — not demo-only tricks
 - [ ] Each build step explains what/why for a learner (not just bare snippets)
 - [ ] Key lines use `CodeBlock` `highlightLines`; key phrases use `BuildHighlight`
 - [ ] Verification from `AGENTS.md`: `pnpm lint`, `pnpm exec tsc --noEmit`, and `pnpm build` all pass
