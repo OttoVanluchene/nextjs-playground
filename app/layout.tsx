@@ -17,11 +17,11 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Next.js — Tiny Experiments",
-    template: "%s | Next.js — Tiny Experiments",
+    default: "Tiny Experiments",
+    template: "%s | Tiny Experiments",
   },
   description:
-    "A growing index of small Next.js related experiments for learning, experimenting, and keeping reusable patterns within reach.",
+    "A growing index of small experiments in the Next.js world — for learning, trying ideas, and keeping reusable patterns within reach.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

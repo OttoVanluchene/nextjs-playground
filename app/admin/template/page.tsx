@@ -1,13 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import {
-  ArrowLeft,
-  CheckCircle2,
-  ExternalLink,
-  FilePlus2,
-  FolderPlus,
-} from "lucide-react";
+import { CheckCircle2, ExternalLink, FilePlus2, FolderPlus } from "lucide-react";
 
+import { CodeBlock } from "@/components/code-block";
+import { ExperimentBackLink } from "@/components/experiment-back-link";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -30,7 +26,7 @@ const experimentSnippet = `{
   description: "A focused example of accessible dialog composition with shadcn.",
   group: "ui",
   tags: ["shadcn", "accessibility", "dialog"],
-  publishedAt: "2026-08-11",
+  publishedAt: "2026-08-11T10:00Z",
 },`;
 
 const pageSnippet = `import type { Metadata } from "next";
@@ -38,6 +34,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { DialogDemo } from "./dialog-demo";
+import { ExperimentBackLink } from "@/components/experiment-back-link";
+import { ExperimentBuildSection } from "@/components/experiment-build-section";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import {
@@ -59,19 +57,28 @@ export default function DialogBasicsPage() {
 
   return (
     <main className="flex-1">
-      <div className="mx-auto px-5 sm:px-8 py-12 sm:py-16 max-w-6xl">
-        <Link href="/">Back to experiment index</Link>
+      <div className="mx-auto px-5 sm:px-8 pt-3 sm:pt-4 pb-12 sm:pb-16 max-w-6xl">
+        <div className="flex justify-between items-center gap-3">
+          <ExperimentBackLink />
+          <Badge variant="outline" className={cn(groupColors.badge)}>
+            {experiment.groupInfo.name}
+          </Badge>
+        </div>
 
-        <Badge variant="outline" className={cn(groupColors.badge)}>
-          {experiment.groupInfo.name}
-        </Badge>
-        <h1>{experiment.title}</h1>
-        <p>{experiment.description}</p>
+        <div className="mt-6 max-w-2xl">
+          <h1>{experiment.title}</h1>
+          <p>{experiment.description}</p>
 
-        <Link href="/admin/template">How this experiment was added</Link>
+          <Link href="/admin/template">How this experiment was added</Link>
+        </div>
 
         <DialogDemo />
       </div>
+
+      <ExperimentBuildSection>
+        <h2>How to build it</h2>
+        {/* CodeBlock tone="elevated" + teaching notes per step */}
+      </ExperimentBuildSection>
     </main>
   );
 }`;
@@ -116,21 +123,17 @@ export function DialogDemo() {
 export default function AdminTemplatePage() {
   return (
     <main className="flex-1">
-      <div className="mx-auto px-5 sm:px-8 py-12 sm:py-16 max-w-6xl">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-1.5 font-medium text-muted-foreground hover:text-foreground text-sm transition-colors"
-        >
-          <ArrowLeft className="size-4" aria-hidden="true" />
-          Back to experiment index
-        </Link>
-
-        <div className="mt-10 max-w-2xl">
+      <div className="mx-auto px-5 sm:px-8 pt-3 sm:pt-4 pb-12 sm:pb-16 max-w-6xl">
+        <div className="flex justify-between items-center gap-3">
+          <ExperimentBackLink />
           <Badge variant="secondary">Unlisted reference</Badge>
-          <h1 className="mt-4 font-semibold text-4xl sm:text-5xl text-balance tracking-tight">
+        </div>
+
+        <div className="mt-6 max-w-2xl">
+          <h1 className="font-semibold text-4xl sm:text-5xl text-balance tracking-tight">
             Add an experiment or group
           </h1>
-          <p className="mt-5 text-muted-foreground text-lg leading-8">
+          <p className="mt-4 text-muted-foreground text-lg leading-8">
             A private reference for keeping the catalog and route structure in sync.
             Linked from the dialog template example so you can jump between the finished
             experiment and these steps.
@@ -197,6 +200,27 @@ export default function AdminTemplatePage() {
                 filename="app/experiments/ui/dialog-basics/dialog-demo.tsx"
                 code={clientComponentSnippet}
               />
+              <p>
+                Every experiment page must include a{" "}
+                <strong className="font-medium text-foreground">How to build it</strong>{" "}
+                section with real code blocks (install commands, key files, wiring) — not
+                only a live demo and theory cards. Wrap it in{" "}
+                <code className="bg-muted px-1.5 py-0.5 rounded font-mono text-foreground text-xs">
+                  ExperimentBuildSection
+                </code>{" "}
+                (full-bleed grey band: light in light mode, dark in dark mode) and reuse{" "}
+                <code className="bg-muted px-1.5 py-0.5 rounded font-mono text-foreground text-xs">
+                  CodeBlock
+                </code>{" "}
+                with{" "}
+                <code className="bg-muted px-1.5 py-0.5 rounded font-mono text-foreground text-xs">
+                  tone=&quot;elevated&quot;
+                </code>
+                . After each block, add short teaching notes: what the code does and why
+                that approach was chosen (server/client split, library APIs,
+                accessibility). Write for someone learning the pattern, not for someone
+                who already knows it.
+              </p>
             </CardContent>
           </Card>
 
@@ -252,28 +276,5 @@ export default function AdminTemplatePage() {
         </p>
       </div>
     </main>
-  );
-}
-
-function CodeBlock({
-  code,
-  filename,
-  language = "ts",
-}: {
-  code: string;
-  filename?: string;
-  language?: "path" | "ts";
-}) {
-  return (
-    <div className="bg-muted/60 border border-border rounded-lg overflow-hidden">
-      {filename ? (
-        <div className="px-4 py-2 border-border border-b font-mono text-[11px] text-muted-foreground">
-          {filename}
-        </div>
-      ) : null}
-      <pre className="p-4 overflow-x-auto text-foreground text-xs leading-6">
-        <code data-language={language}>{code}</code>
-      </pre>
-    </div>
   );
 }

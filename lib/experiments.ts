@@ -35,6 +35,8 @@ export const experimentGroups = [
 
 export type ExperimentGroupSlug = (typeof experimentGroups)[number]["slug"];
 
+export const DEFAULT_EXPERIMENT_AUTHOR = "Otto Vanluchene";
+
 export type Experiment = {
   slug: string;
   title: string;
@@ -42,28 +44,39 @@ export type Experiment = {
   group: ExperimentGroupSlug;
   tags: readonly string[];
   publishedAt: string;
+  /** Defaults to {@link DEFAULT_EXPERIMENT_AUTHOR} when omitted. */
+  author?: string;
 };
 
 export const experiments = [
   {
     slug: "dialog-basics",
     title: "Dialog basics (template example)",
-    description: "A focused example of accessible dialog composition with shadcn.",
+    description:
+      "A small shadcn dialog — server page, client dialog only where clicks happen.",
     group: "ui",
     tags: ["shadcn", "accessibility", "dialog"],
-    publishedAt: "2026-08-11",
+    publishedAt: "2026-08-11T10:00Z",
+  },
+  {
+    slug: "usememo-basics",
+    title: "useMemo basics",
+    description: "Keep filtered lists from rebuilding on every client re-render.",
+    group: "nextjs",
+    tags: ["react", "performance", "client"],
+    publishedAt: "2026-08-11T14:30Z",
   },
 ] as const satisfies readonly Experiment[];
 
-export type CatalogExperiment = Experiment & {
+export type CatalogExperiment = Omit<Experiment, "author"> & {
   groupInfo: ExperimentGroup;
+  author: string;
 };
 
 const GROUP_COLOR_CLASSES = {
   blue: {
     badge:
       "border-blue-500/35 bg-blue-500/15 text-blue-700 dark:border-blue-400/35 dark:bg-blue-400/15 dark:text-blue-300",
-    cardAccent: "border-l-blue-500 dark:border-l-blue-400",
     button:
       "border-blue-500/40 bg-blue-500/10 text-blue-700 hover:bg-blue-500/20 dark:border-blue-400/40 dark:bg-blue-400/10 dark:text-blue-300 dark:hover:bg-blue-400/20",
     buttonSelected:
@@ -72,7 +85,6 @@ const GROUP_COLOR_CLASSES = {
   emerald: {
     badge:
       "border-emerald-500/35 bg-emerald-500/15 text-emerald-700 dark:border-emerald-400/35 dark:bg-emerald-400/15 dark:text-emerald-300",
-    cardAccent: "border-l-emerald-500 dark:border-l-emerald-400",
     button:
       "border-emerald-500/40 bg-emerald-500/10 text-emerald-700 hover:bg-emerald-500/20 dark:border-emerald-400/40 dark:bg-emerald-400/10 dark:text-emerald-300 dark:hover:bg-emerald-400/20",
     buttonSelected:
@@ -81,7 +93,6 @@ const GROUP_COLOR_CLASSES = {
   amber: {
     badge:
       "border-amber-500/35 bg-amber-500/15 text-amber-800 dark:border-amber-400/35 dark:bg-amber-400/15 dark:text-amber-300",
-    cardAccent: "border-l-amber-500 dark:border-l-amber-400",
     button:
       "border-amber-500/40 bg-amber-500/10 text-amber-800 hover:bg-amber-500/20 dark:border-amber-400/40 dark:bg-amber-400/10 dark:text-amber-300 dark:hover:bg-amber-400/20",
     buttonSelected:
@@ -90,7 +101,6 @@ const GROUP_COLOR_CLASSES = {
   rose: {
     badge:
       "border-rose-500/35 bg-rose-500/15 text-rose-700 dark:border-rose-400/35 dark:bg-rose-400/15 dark:text-rose-300",
-    cardAccent: "border-l-rose-500 dark:border-l-rose-400",
     button:
       "border-rose-500/40 bg-rose-500/10 text-rose-700 hover:bg-rose-500/20 dark:border-rose-400/40 dark:bg-rose-400/10 dark:text-rose-300 dark:hover:bg-rose-400/20",
     buttonSelected:
@@ -99,7 +109,6 @@ const GROUP_COLOR_CLASSES = {
   violet: {
     badge:
       "border-violet-500/35 bg-violet-500/15 text-violet-700 dark:border-violet-400/35 dark:bg-violet-400/15 dark:text-violet-300",
-    cardAccent: "border-l-violet-500 dark:border-l-violet-400",
     button:
       "border-violet-500/40 bg-violet-500/10 text-violet-700 hover:bg-violet-500/20 dark:border-violet-400/40 dark:bg-violet-400/10 dark:text-violet-300 dark:hover:bg-violet-400/20",
     buttonSelected:
@@ -108,7 +117,6 @@ const GROUP_COLOR_CLASSES = {
   cyan: {
     badge:
       "border-cyan-500/35 bg-cyan-500/15 text-cyan-800 dark:border-cyan-400/35 dark:bg-cyan-400/15 dark:text-cyan-300",
-    cardAccent: "border-l-cyan-500 dark:border-l-cyan-400",
     button:
       "border-cyan-500/40 bg-cyan-500/10 text-cyan-800 hover:bg-cyan-500/20 dark:border-cyan-400/40 dark:bg-cyan-400/10 dark:text-cyan-300 dark:hover:bg-cyan-400/20",
     buttonSelected:
@@ -117,7 +125,6 @@ const GROUP_COLOR_CLASSES = {
   orange: {
     badge:
       "border-orange-500/35 bg-orange-500/15 text-orange-800 dark:border-orange-400/35 dark:bg-orange-400/15 dark:text-orange-300",
-    cardAccent: "border-l-orange-500 dark:border-l-orange-400",
     button:
       "border-orange-500/40 bg-orange-500/10 text-orange-800 hover:bg-orange-500/20 dark:border-orange-400/40 dark:bg-orange-400/10 dark:text-orange-300 dark:hover:bg-orange-400/20",
     buttonSelected:
@@ -126,7 +133,6 @@ const GROUP_COLOR_CLASSES = {
   lime: {
     badge:
       "border-lime-500/35 bg-lime-500/15 text-lime-800 dark:border-lime-400/35 dark:bg-lime-400/15 dark:text-lime-300",
-    cardAccent: "border-l-lime-500 dark:border-l-lime-400",
     button:
       "border-lime-500/40 bg-lime-500/10 text-lime-800 hover:bg-lime-500/20 dark:border-lime-400/40 dark:bg-lime-400/10 dark:text-lime-300 dark:hover:bg-lime-400/20",
     buttonSelected:
@@ -136,7 +142,6 @@ const GROUP_COLOR_CLASSES = {
   GroupColor,
   {
     badge: string;
-    cardAccent: string;
     button: string;
     buttonSelected: string;
   }
@@ -160,7 +165,7 @@ export function formatExperimentDate(publishedAt: string) {
     month: "short",
     year: "numeric",
     timeZone: "UTC",
-  }).format(new Date(`${publishedAt}T00:00:00Z`));
+  }).format(new Date(publishedAt));
 }
 
 function validateCatalog() {
@@ -199,6 +204,7 @@ export function getCatalogExperiments(): CatalogExperiment[] {
     .sort((first, second) => second.publishedAt.localeCompare(first.publishedAt))
     .map((experiment) => ({
       ...experiment,
+      author: experiment.author ?? DEFAULT_EXPERIMENT_AUTHOR,
       groupInfo: groupsBySlug.get(experiment.group)!,
     }));
 }

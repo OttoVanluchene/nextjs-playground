@@ -117,6 +117,13 @@ export function ExperimentCatalog({ experiments, groups }: ExperimentCatalogProp
     setIsTagPopoverOpen(false);
   }
 
+  function resetTagFilter() {
+    setSelectedTag("all");
+    setTagQuery("");
+  }
+
+  const canResetTagFilter = activeTag !== "all" || tagQuery.trim().length > 0;
+
   return (
     <div>
       <div>
@@ -232,11 +239,23 @@ export function ExperimentCatalog({ experiments, groups }: ExperimentCatalogProp
                 align="end"
                 className="gap-3 p-3 w-[min(20rem,calc(100vw-2rem))]"
               >
-                <PopoverHeader>
-                  <PopoverTitle>Filter by tag</PopoverTitle>
-                  <PopoverDescription>
-                    Choose one tag from the selected group.
-                  </PopoverDescription>
+                <PopoverHeader className="flex-row justify-between items-start gap-3">
+                  <div className="flex flex-col gap-0.5 min-w-0">
+                    <PopoverTitle>Filter by tag</PopoverTitle>
+                    <PopoverDescription>
+                      Choose one tag from the selected group.
+                    </PopoverDescription>
+                  </div>
+                  <Button
+                    type="button"
+                    size="xs"
+                    variant="ghost"
+                    className="shrink-0"
+                    disabled={!canResetTagFilter}
+                    onClick={resetTagFilter}
+                  >
+                    Reset
+                  </Button>
                 </PopoverHeader>
 
                 <label className="relative">
@@ -302,10 +321,7 @@ export function ExperimentCatalog({ experiments, groups }: ExperimentCatalogProp
                 <li key={href}>
                   <Link
                     href={href}
-                    className={cn(
-                      "group block bg-card hover:bg-muted/50 shadow-xs px-4 sm:px-5 py-4 border border-border hover:border-y-foreground/25 hover:border-r-foreground/25 border-l-[length:var(--radius-xl)] rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring transition-colors",
-                      groupColors.cardAccent,
-                    )}
+                    className="group block bg-card hover:bg-muted/50 shadow-xs px-4 sm:px-5 py-4 border border-border hover:border-foreground/25 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring transition-colors"
                   >
                     <div className="flex justify-between items-start gap-4">
                       <div className="min-w-0">
@@ -341,22 +357,27 @@ export function ExperimentCatalog({ experiments, groups }: ExperimentCatalogProp
                       </div>
                     </div>
 
-                    <div className="flex flex-wrap items-center gap-1.5 mt-3">
-                      <time
-                        dateTime={experiment.publishedAt}
-                        className="sm:hidden mr-1 font-mono text-muted-foreground text-xs"
-                      >
-                        {formatExperimentDate(experiment.publishedAt)}
-                      </time>
-                      {experiment.tags.map((tag) => (
-                        <Badge
-                          key={tag}
-                          variant="outline"
-                          className="font-normal text-muted-foreground"
+                    <div className="flex flex-wrap justify-between items-center gap-x-3 gap-y-1.5 mt-3">
+                      <div className="flex flex-wrap items-center gap-1.5 min-w-0">
+                        <time
+                          dateTime={experiment.publishedAt}
+                          className="sm:hidden mr-1 font-mono text-muted-foreground text-xs"
                         >
-                          {tag}
-                        </Badge>
-                      ))}
+                          {formatExperimentDate(experiment.publishedAt)}
+                        </time>
+                        {experiment.tags.map((tag) => (
+                          <Badge
+                            key={tag}
+                            variant="outline"
+                            className="font-normal text-muted-foreground"
+                          >
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
+                      <p className="ml-auto text-muted-foreground text-xs shrink-0">
+                        {experiment.author}
+                      </p>
                     </div>
                   </Link>
                 </li>

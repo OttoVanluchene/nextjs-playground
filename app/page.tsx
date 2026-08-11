@@ -15,11 +15,11 @@ export default function Home() {
               Learning lab
             </p>
             <h1 className="max-w-2xl font-semibold text-3xl sm:text-4xl text-balance tracking-tight">
-              Next.js — Tiny Experiments
+              Tiny Experiments
             </h1>
             <p className="mt-3 max-w-2xl text-muted-foreground text-base sm:text-lg leading-7">
-              A growing index of small Next.js related experiments for learning,
-              experimenting, and keeping reusable patterns within reach.
+              A growing index of small experiments in the Next.js world — for learning,
+              trying ideas, and keeping reusable patterns within reach.
             </p>
           </div>
 

@@ -14,7 +14,7 @@ export function SiteHeader() {
           <span className="place-items-center grid bg-muted group-hover:bg-accent border border-border rounded-lg size-8 text-foreground transition-colors">
             <FlaskConical className="size-4" aria-hidden="true" />
           </span>
-          <span>Next.js — Tiny Experiments</span>
+          <span>Tiny Experiments</span>
         </Link>
         <ThemeToggle />
       </div>
